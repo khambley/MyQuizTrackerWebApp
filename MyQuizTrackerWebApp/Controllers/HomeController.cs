@@ -12,20 +12,24 @@ namespace MyQuizTrackerWebApp.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
+		private IRepository repository;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(IRepository repo, ILogger<HomeController> logger) 
 		{
+			repository = repo;
 			_logger = logger;
 		}
 
 		public IActionResult Index()
 		{
-			return View();
+			return View(repository.Questions);
 		}
 
-		public IActionResult Privacy()
+		[HttpPost]
+		public IActionResult AddQuestion(Question question)
 		{
-			return View();
+			repository.AddQuestion(question);
+			return RedirectToAction(nameof(Index));
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -26,6 +26,7 @@ namespace MyQuizTrackerWebApp
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+			services.AddSingleton<IRepository, DataRepository>();
 			services.AddDbContext<QuizDbContext>(options =>
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"
 			)));
